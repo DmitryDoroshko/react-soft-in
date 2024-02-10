@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
 import { Button } from "../ui/Button/Button.tsx";
 
@@ -13,7 +13,9 @@ export function AddCityForm() {
     setIsFormVisible(false);
   };
 
-  const handleSubmittingAddCity = () => {
+  const handleSubmittingAddCity = (event: React.SyntheticEvent) => {
+    event.preventDefault();
+    console.log("Submitting...");
   };
 
   return (
