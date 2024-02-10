@@ -1,8 +1,8 @@
-type HeaderProps = {
+interface IHeaderProps {
   title: string;
 }
 
-export function Header({ title }: HeaderProps) {
+export function Header({ title }: IHeaderProps) {
   return (
     <header className="header">
       <div className="container">

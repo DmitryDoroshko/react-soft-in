@@ -7,6 +7,9 @@
 body {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   background-color: rgba(47, 26, 99, 0.07);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .container {
@@ -46,6 +49,7 @@ body {
   display: flex;
   padding: 20px 0;
   justify-content: space-between;
+  flex-grow: 1;
 }
 
 .countries {
@@ -95,6 +99,92 @@ body {
     list-style-type: none;
   }
 }
+
+.footer {
+  margin-top: auto;
+  animation-name: moveInRight;
+  animation-duration: 1.5s;
+  animation-timing-function: linear;
+}
+
+.button {
+  cursor: pointer;
+  margin: 15px 0 15px 10px;
+  padding: 15px 25px;
+  background-color: #3785ff;
+  color: white;
+  border: none;
+  border-radius: 7px;
+}
+
+.form {
+
+  .form__header {
+  }
+
+  .form__header-cities-of {
+  }
+
+  .form__item-add-btn-wrapper {
+  }
+
+  .form__item-add-btn {
+    margin-left: 0;
+  }
+
+  .form__item-add-city-info {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    width: 100%;
+    max-width: 640px;
+    height: auto;
+    border: 1px solid #4e97ff;
+    background-color: white;
+    margin-bottom: 2px;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .form__item-add-city-info-header {
+    margin: 10px 0 0 20px;
+    width: 100%;
+    color: #1516ff;
+    font-size: 18px;
+  }
+
+  .form__item-add-city-textareas {
+  }
+
+  .form__item-add-city-info-city-name {
+  }
+
+  .form__item-add-city-info-city-description {
+  }
+
+  .form__item-add-city-buttons {
+  }
+
+  .form__item-add-city-btn {
+  }
+
+  .form__item-add-city-cancel-btn {
+  }
+}
+
+.textarea {
+  border-radius: 5px;
+  width: 90%;
+  resize: none;
+  margin: 10px 20px 5px;
+  overflow: auto;
+  border:1px solid blue;
+  padding: 15px 5px 5px 5px;
+}
+
+.visually-hidden {
+  display: none;
+}
+
 
 @keyframes moveInRight {
   0% {
