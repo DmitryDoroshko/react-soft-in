@@ -9,4 +9,5 @@ export interface ICountry {
   id: string | number;
   name: string;
   description: string;
+  isActive?: boolean;
 }

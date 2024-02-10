@@ -5,6 +5,7 @@ export const countriesData: ICountry[] = [
     id: 1,
     name: "UK",
     description: "The United Kingdom of Great Britain and Northern Ireland, commonly known as the United Kingdom(UK) or Britain, is a sovereign state in Europe",
+    isActive: true,
   },
   {
     id: 2,
