@@ -11,7 +11,7 @@ type FormData = {
 
 export function AddCityForm() {
   const { addCity, selectedCountryId } = useContext(CountriesContext);
-  const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
+  const { register, handleSubmit, formState: { errors }, reset: resetFormFields } = useForm<FormData>();
   const [isFormVisible, setIsFormVisible] = useState(true);
 
   const handleMakeFormVisible = () => {
@@ -29,6 +29,7 @@ export function AddCityForm() {
       title: data.cityName,
       description: data.cityDescription,
     });
+    resetFormFields();
   };
 
   return (
