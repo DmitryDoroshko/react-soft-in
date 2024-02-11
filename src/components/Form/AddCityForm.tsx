@@ -1,9 +1,16 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 
 import { Button } from "../ui/Button/Button.tsx";
 
+type FormData = {
+  cityName: string;
+  cityDescription: string;
+};
+
 export function AddCityForm() {
-  const [isFormVisible, setIsFormVisible] = useState(false);
+  const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
+  const [isFormVisible, setIsFormVisible] = useState(true);
 
   const handleMakeFormVisible = () => {
     setIsFormVisible(prevState => !prevState);
@@ -13,13 +20,13 @@ export function AddCityForm() {
     setIsFormVisible(false);
   };
 
-  const handleSubmittingAddCity = (event: React.SyntheticEvent) => {
-    event.preventDefault();
+  const handleSubmittingAddCity = (data: FormData) => {
     console.log("Submitting...");
+    console.log(data);
   };
 
   return (
-    <form className="form">
+    <form className="form" onSubmit={handleSubmit(handleSubmittingAddCity)}>
       {
         !isFormVisible && <div className="form__item-add-btn-wrapper">
           <Button className="form__item-add-btn button" type="button" onClick={handleMakeFormVisible}>Add
@@ -33,18 +40,26 @@ export function AddCityForm() {
             <h2 className="form__item-add-city-info-header">Add city:</h2>
 
             <div className="form__item-add-city-textareas">
-                    <textarea name="country-name" id="country-name" cols={33} rows={2}
+                    <textarea cols={33}
+                              rows={2}
                               className="form__item-add-city-info-city-name textarea"
-                              placeholder="Enter the city name..."></textarea>
-              <textarea name="city-description" id="city-description" cols={33} rows={5}
-                        className="form__item-add-city-info-city-description textarea"
-                        placeholder="Enter description of the city..."></textarea>
+                              placeholder="Enter the city name..."
+                              {...register("cityName", { required: "City name is required" })}></textarea>
+              {errors.cityName && <p>{errors.cityName.message}</p>}
+              <textarea
+                cols={33}
+                rows={5}
+                className="form__item-add-city-info-city-description textarea"
+                placeholder="Enter description of the city..."
+                {...register("cityDescription", { required: "City description is required" })}></textarea>
+              {errors.cityDescription && <p>{errors.cityDescription.message}</p>}
+
             </div>
 
             <div className="form__item-add-city-buttons">
-              <Button type="submit" className="form__item-add-city-btn button"
-                      onClick={handleSubmittingAddCity}>Submit</Button>
-              <Button className="form__item-add-city-cancel-btn button"
+              <Button type="submit"
+                      className="form__item-add-city-btn button">Submit</Button>
+              <Button className="form__item-add-city-cancel-btn button transparent"
                       onClick={handleCloseForm}>Cancel</Button>
             </div>
           </div>

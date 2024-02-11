@@ -4,13 +4,13 @@ interface IButtonProps {
   children: React.ReactNode;
   className?: string;
   type?: "submit" | "button";
-  onClick: () => void;
+  onClick?: (event: React.SyntheticEvent) => void;
 }
 
 export function Button({ children, className = "button", type = "button", onClick, ...props }: IButtonProps) {
   return (
     <button
-      className={className}
+      className={`button ${className}`}
       type={type}
       onClick={onClick}
       {...props}
