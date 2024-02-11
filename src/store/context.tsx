@@ -13,6 +13,7 @@ interface ICountriesContext {
   setAllCities: (cities: ICity[]) => void;
   onSelectedCountryIdChange: (newSelectedCountryId: string | number) => void;
   currentCountry: ICountry | null;
+  addCity: (city: ICity) => void;
 }
 
 export const CountriesContext = createContext<ICountriesContext>({
@@ -31,6 +32,8 @@ export const CountriesContext = createContext<ICountriesContext>({
   },
   onSelectedCountryIdChange: () => {
   },
+  addCity: () => {
+  },
 });
 
 export function CountriesContextProvider({ children }: { children: React.ReactNode; }) {
@@ -45,6 +48,21 @@ export function CountriesContextProvider({ children }: { children: React.ReactNo
     const newCurrentCities = allCities.filter(city => city.country_id === selectedCountryId);
     setCurrentCities(newCurrentCities);
   }, [allCities, selectedCountryId]);
+
+  function addCity(newCity: ICity) {
+    if (newCity.title.trim().length === 0 || newCity.description.trim().length === 0) {
+      console.log("The data must not be empty.");
+      return;
+    }
+
+    setAllCities(prevCities => {
+      return [...prevCities, newCity];
+    });
+
+    if (currentCountry?.id === newCity.id) {
+      setCurrentCities(prev => [...prev, newCity]);
+    }
+  }
 
   function onSelectedCountryIdChange(newCountryId: string | number) {
     setSelectedCountryId(newCountryId);
@@ -79,6 +97,7 @@ export function CountriesContextProvider({ children }: { children: React.ReactNo
     setAllCities,
     onSelectedCountryIdChange,
     currentCountry,
+    addCity,
   };
 
   return (

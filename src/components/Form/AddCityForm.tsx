@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { Button } from "../ui/Button/Button.tsx";
+import { CountriesContext } from "../../store/context.tsx";
 
 type FormData = {
   cityName: string;
@@ -9,6 +10,7 @@ type FormData = {
 };
 
 export function AddCityForm() {
+  const { addCity, selectedCountryId } = useContext(CountriesContext);
   const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
   const [isFormVisible, setIsFormVisible] = useState(true);
 
@@ -21,8 +23,12 @@ export function AddCityForm() {
   };
 
   const handleSubmittingAddCity = (data: FormData) => {
-    console.log("Submitting...");
-    console.log(data);
+    addCity({
+      id: Math.random(),
+      country_id: selectedCountryId,
+      title: data.cityName,
+      description: data.cityDescription,
+    });
   };
 
   return (
