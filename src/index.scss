@@ -109,6 +109,7 @@ body {
 
   &__item {
     display: flex;
+    justify-content: space-between;
     background-color: white;
     padding: 20px 10px;
 
@@ -168,20 +169,20 @@ body {
 
 .form {
 
-  .form__header {
+  &__header {
   }
 
-  .form__header-cities-of {
+  &__header-cities-of {
   }
 
-  .form__item-add-btn-wrapper {
+  &__item-add-btn-wrapper {
   }
 
-  .form__item-add-btn {
+  &__item-add-btn {
     margin-left: 0;
   }
 
-  .form__item-add-city-info {
+  &__item-add-city-info {
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     width: 100%;
@@ -195,31 +196,31 @@ body {
     padding: 10px 20px;
   }
 
-  .form__item-add-city-info-header {
+  &__item-add-city-info-header {
     margin: 10px 0 0 0;
     width: 100%;
     color: #1516ff;
     font-size: 18px;
   }
 
-  .form__item-add-city-textareas {
+  &__item-add-city-textareas {
   }
 
-  .form__item-add-city-info-city-name {
+  &__item-add-city-info-city-name {
   }
 
-  .form__item-add-city-info-city-description {
+  &__item-add-city-info-city-description {
   }
 
-  .form__item-add-city-buttons {
+  &__item-add-city-buttons {
     display: flex;
     gap: 10px;
   }
 
-  .form__item-add-city-btn {
+  &__item-add-city-btn {
   }
 
-  .form__item-add-city-cancel-btn {
+  &__item-add-city-cancel-btn {
   }
 }
 
