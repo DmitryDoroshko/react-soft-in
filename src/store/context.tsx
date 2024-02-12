@@ -15,6 +15,7 @@ interface ICountriesContext {
   onSelectedCountryIdChange: (newSelectedCountryId: string | number) => void;
   currentCountry: ICountry | null | undefined;
   addCity: (city: ICity) => void;
+  deleteCity: (cityToBeDeletedId: string | number) => void;
 }
 
 export const CountriesContext = createContext<ICountriesContext>({
@@ -35,6 +36,7 @@ export const CountriesContext = createContext<ICountriesContext>({
   },
   addCity: () => {
   },
+  deleteCity: () => {},
 });
 
 export function CountriesContextProvider({ children }: { children: React.ReactNode; }) {
@@ -63,6 +65,22 @@ export function CountriesContextProvider({ children }: { children: React.ReactNo
     if (currentCountry?.id === newCity.id) {
       setCurrentCities(prev => [...prev, newCity]);
     }
+  }
+
+  function deleteCity(cityToBeDeletedId: string | number) {
+    const cityFound = allCities.find(city => city.id === cityToBeDeletedId);
+
+    if (!cityFound) {
+      throw new Error("City to delete not found");
+    }
+
+    setAllCities(prevCities => {
+      return prevCities.filter(city => city.id !== cityToBeDeletedId);
+    });
+
+    setCurrentCities(prevCities => {
+      return prevCities.filter(city => city.id !== cityToBeDeletedId);
+    });
   }
 
   function onSelectedCountryIdChange(newCountryId: string | number) {
@@ -99,6 +117,7 @@ export function CountriesContextProvider({ children }: { children: React.ReactNo
     onSelectedCountryIdChange,
     currentCountry,
     addCity,
+    deleteCity
   };
 
   return (
