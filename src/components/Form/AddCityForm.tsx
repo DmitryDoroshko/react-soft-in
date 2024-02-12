@@ -4,6 +4,9 @@ import { useForm } from "react-hook-form";
 import { Button } from "../ui/Button/Button.tsx";
 import { CountriesContext } from "../../store/context.tsx";
 
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 type FormData = {
   cityName: string;
   cityDescription: string;
@@ -30,48 +33,54 @@ export function AddCityForm() {
       description: data.cityDescription,
     });
     resetFormFields();
+    toast.success("City added!", {
+      position: "bottom-right"
+    });
   };
 
   return (
-    <form className="form" onSubmit={handleSubmit(handleSubmittingAddCity)}>
-      {
-        !isFormVisible && <div className="form__item-add-btn-wrapper">
-          <Button className="form__item-add-btn button" type="button" onClick={handleMakeFormVisible}>Add
-            City</Button>
-        </div>
-      }
+    <>
+      <form className="form" onSubmit={handleSubmit(handleSubmittingAddCity)}>
+        {
+          !isFormVisible && <div className="form__item-add-btn-wrapper">
+            <Button className="form__item-add-btn button" type="button" onClick={handleMakeFormVisible}>Add
+              City</Button>
+          </div>
+        }
 
-      {
-        isFormVisible && (
-          <div className="form__item-add-city-info">
-            <h2 className="form__item-add-city-info-header">Add city:</h2>
+        {
+          isFormVisible && (
+            <div className="form__item-add-city-info">
+              <h2 className="form__item-add-city-info-header">Add city:</h2>
 
-            <div className="form__item-add-city-textareas">
+              <div className="form__item-add-city-textareas">
                     <textarea cols={33}
                               rows={2}
                               className="form__item-add-city-info-city-name textarea"
                               placeholder="Enter the city name..."
                               {...register("cityName", { required: "City name is required" })}></textarea>
-              {errors.cityName && <p>{errors.cityName.message}</p>}
-              <textarea
-                cols={33}
-                rows={5}
-                className="form__item-add-city-info-city-description textarea"
-                placeholder="Enter description of the city..."
-                {...register("cityDescription", { required: "City description is required" })}></textarea>
-              {errors.cityDescription && <p>{errors.cityDescription.message}</p>}
+                {errors.cityName && <p>{errors.cityName.message}</p>}
+                <textarea
+                  cols={33}
+                  rows={5}
+                  className="form__item-add-city-info-city-description textarea"
+                  placeholder="Enter description of the city..."
+                  {...register("cityDescription", { required: "City description is required" })}></textarea>
+                {errors.cityDescription && <p>{errors.cityDescription.message}</p>}
 
-            </div>
+              </div>
 
-            <div className="form__item-add-city-buttons">
-              <Button type="submit"
-                      className="form__item-add-city-btn button">Submit</Button>
-              <Button className="form__item-add-city-cancel-btn button transparent"
-                      onClick={handleCloseForm}>Cancel</Button>
+              <div className="form__item-add-city-buttons">
+                <Button type="submit"
+                        className="form__item-add-city-btn button">Submit</Button>
+                <Button className="form__item-add-city-cancel-btn button transparent"
+                        onClick={handleCloseForm}>Cancel</Button>
+              </div>
             </div>
-          </div>
-        )
-      }
-    </form>
+          )
+        }
+      </form>
+      <ToastContainer />
+    </>
   );
 }
