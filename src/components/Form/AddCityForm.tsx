@@ -24,6 +24,7 @@ export function AddCityForm() {
 
   const handleCloseForm = () => {
     setIsFormVisible(false);
+    resetFormFields();
   };
 
   const handleSubmittingAddCity = (data: FormData) => {
