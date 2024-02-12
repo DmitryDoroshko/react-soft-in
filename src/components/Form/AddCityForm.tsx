@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
+import { v4 as uuidv4 } from 'uuid';
 
 import { Button } from "../ui/Button/Button.tsx";
 import { CountriesContext } from "../../store/context.tsx";
@@ -27,7 +28,7 @@ export function AddCityForm() {
 
   const handleSubmittingAddCity = (data: FormData) => {
     addCity({
-      id: Math.random(),
+      id: uuidv4(),
       country_id: selectedCountryId,
       title: data.cityName,
       description: data.cityDescription,

@@ -241,6 +241,12 @@ body {
   text-decoration: underline;
 }
 
+.move-in-right {
+  animation-name: moveInRight;
+  animation-duration: 1s;
+  animation-timing-function: linear;
+}
+
 @keyframes moveInRight {
   0% {
     opacity: 0;

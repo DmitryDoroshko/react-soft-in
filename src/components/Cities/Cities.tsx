@@ -8,7 +8,8 @@ export function Cities() {
 
   return (
     <div className={"cities"}>
-      <h2 className={"cities__main-title"}>Cities of <span className={"underlined"}>{currentCountry?.name}</span></h2>
+      <h2 className={"cities__main-title"}>Cities of <span
+        className={"underlined"}>{currentCountry?.name}</span></h2>
 
       <div className="cities__content" style={{ marginBottom: "10px" }}>
         <AddCityForm />

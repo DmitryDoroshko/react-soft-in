@@ -2,6 +2,7 @@ import React, { createContext, useEffect, useState } from "react";
 import { ICity, ICountry } from "../types/types.ts";
 import { citiesData, countriesData } from "../data/cities-data.ts";
 
+
 interface ICountriesContext {
   selectedCountryId: string | number;
   setSelectedCountryId: (id: string) => void;
@@ -12,7 +13,7 @@ interface ICountriesContext {
   allCities: ICity[];
   setAllCities: (cities: ICity[]) => void;
   onSelectedCountryIdChange: (newSelectedCountryId: string | number) => void;
-  currentCountry: ICountry | null;
+  currentCountry: ICountry | null | undefined;
   addCity: (city: ICity) => void;
 }
 
@@ -42,7 +43,7 @@ export function CountriesContextProvider({ children }: { children: React.ReactNo
   const [selectedCountryId, setSelectedCountryId] = useState(countriesData[0].id);
   const [allCities, setAllCities] = useState(citiesData);
 
-  const [currentCountry, setCurrentCountry] = useState<ICountry | null>(null);
+  const [currentCountry, setCurrentCountry] = useState<ICountry | undefined>(countriesData.find(country => country.id === selectedCountryId));
 
   useEffect(() => {
     const newCurrentCities = allCities.filter(city => city.country_id === selectedCountryId);
@@ -83,7 +84,7 @@ export function CountriesContextProvider({ children }: { children: React.ReactNo
       return;
     }
 
-    setCurrentCountry(null);
+    setCurrentCountry(undefined);
   }
 
   const contextValue = {
