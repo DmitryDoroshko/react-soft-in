@@ -6,7 +6,6 @@ import "react-toastify/dist/ReactToastify.css";
 
 import { CountriesContext } from "../../store/context.tsx";
 import { ModalForm } from "../Modal/ModalForm.tsx";
-import { ICity } from "../../types/types.ts";
 
 interface ICityProps {
   id: string | number;
@@ -17,7 +16,7 @@ interface ICityProps {
 export function City({ id, title, description }: ICityProps) {
   const { deleteCity } = useContext(CountriesContext);
 
-  const [editingCity, setEditingCity] = useState<ICity | null>(null);
+/*  const [editingCity, setEditingCity] = useState<ICity | null>(null);*/
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => {
@@ -41,7 +40,7 @@ export function City({ id, title, description }: ICityProps) {
         position: "bottom-right",
       });
     } catch (error) {
-      console.log(error);
+      console.error({ error });
     }
   };
 

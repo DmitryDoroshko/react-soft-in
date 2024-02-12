@@ -1,21 +1,24 @@
-import React, { useState } from "react";
+import React, { useId, useState } from "react";
 import ReactDOM from "react-dom";
+import { Button } from "../ui/Button/Button.tsx";
 
-interface ModalProps {
+interface IModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (data: FormData) => void;
+  onSubmit: (data: IFormData) => void;
 }
 
-interface FormData {
+interface IFormData {
   name: string;
   description: string;
 }
 
-export const ModalForm: React.FC<ModalProps> = ({ isOpen, onClose, onSubmit }) => {
-  const [formData, setFormData] = useState<FormData>({ name: "", description: "" });
+export const ModalForm: React.FC<IModalProps> = ({ isOpen, onClose, onSubmit }) => {
+  const cityNameId = useId();
+  const cityDescriptionId = useId();
+  const [formData, setFormData] = useState<IFormData>({ name: "", description: "" });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prevState => ({
       ...prevState,
@@ -34,18 +37,22 @@ export const ModalForm: React.FC<ModalProps> = ({ isOpen, onClose, onSubmit }) =
   return ReactDOM.createPortal(
     <div className="modal">
       <div className="modal-content">
-        <span className="close" onClick={onClose}>&times;</span>
-        <h2>Edit City</h2>
+        <div className="modal-top">
+          <h2>Edit City</h2>
+          <span className="close" onClick={onClose}>&times;</span>
+        </div>
         <form onSubmit={handleSubmit}>
-          <div>
-            <label>Name:</label>
-            <input type="text" name="name" value={formData.name} onChange={handleChange} />
+          <div className={"controls"}>
+            <label htmlFor={cityNameId}>Name:</label>
+            <textarea id={cityNameId} name="name" value={formData.name} onChange={handleChange}
+                      className={"textarea"} />
           </div>
-          <div>
-            <label>Description:</label>
-            <input type="text" name="description" value={formData.description} onChange={handleChange} />
+          <div className={"controls"}>
+            <label htmlFor={cityDescriptionId}>Description:</label>
+            <textarea id={cityDescriptionId} className={"textarea"} name="description" value={formData.description}
+                      onChange={handleChange} />
           </div>
-          <button type="submit">Save</button>
+          <Button type="submit" style={{ marginTop: "10px" }}>Save</Button>
         </form>
       </div>
     </div>, document.getElementById("modal-root")!,
