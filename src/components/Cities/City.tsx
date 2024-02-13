@@ -6,6 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import { CountriesContext } from "../../store/context.tsx";
 import { ModalForm } from "../Modal/ModalForm.tsx";
+import { ICity } from "../../types/types.ts";
 
 interface ICityProps {
   id: string | number;
@@ -14,9 +15,9 @@ interface ICityProps {
 }
 
 export function City({ id, title, description }: ICityProps) {
-  const { deleteCity } = useContext(CountriesContext);
+  const { deleteCity, currentCities, updateCity } = useContext(CountriesContext);
 
-/*  const [editingCity, setEditingCity] = useState<ICity | null>(null);*/
+  const [editingCity, setEditingCity] = useState<ICity | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => {
@@ -28,10 +29,26 @@ export function City({ id, title, description }: ICityProps) {
   };
 
   const editCityHandler = () => {
-    openModal();
+    const foundCity = currentCities.find(city => city.id === id);
+
+    if (foundCity) {
+      setEditingCity(foundCity);
+      openModal();
+      return;
+    }
+
+    console.error("City to edit not found...");
   };
 
-  const handleSaveCity = () => {};
+  const handleSaveCity = ({ title, description }: {
+    title: string;
+    description: string;
+  }) => {
+    if (editingCity) {
+      updateCity(editingCity, { title, description });
+    }
+    setEditingCity(null);
+  };
 
   const deleteCityHandler = () => {
     try {
@@ -59,7 +76,7 @@ export function City({ id, title, description }: ICityProps) {
         </div>
       </li>
       <ToastContainer />
-      <ModalForm isOpen={isModalOpen} onClose={closeModal} onSubmit={handleSaveCity} />
+      <ModalForm isOpen={isModalOpen} onClose={closeModal} onSubmit={handleSaveCity} editingCity={editingCity} />
     </div>
   );
 }

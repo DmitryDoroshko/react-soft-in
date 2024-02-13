@@ -1,22 +1,32 @@
-import React, { useId, useState } from "react";
+import React, { useEffect, useId, useState } from "react";
 import ReactDOM from "react-dom";
 import { Button } from "../ui/Button/Button.tsx";
+import { ICity } from "../../types/types.ts";
 
 interface IModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSubmit: (data: IFormData) => void;
+  editingCity: ICity | null;
 }
 
 interface IFormData {
-  name: string;
+  title: string;
   description: string;
 }
 
-export const ModalForm: React.FC<IModalProps> = ({ isOpen, onClose, onSubmit }) => {
+export const ModalForm: React.FC<IModalProps> = ({ isOpen, onClose, onSubmit, editingCity }) => {
+
   const cityNameId = useId();
   const cityDescriptionId = useId();
-  const [formData, setFormData] = useState<IFormData>({ name: "", description: "" });
+  const [formData, setFormData] = useState<IFormData>({
+    title: editingCity?.title || "",
+    description: editingCity?.description || "",
+  });
+
+  useEffect(() => {
+    setFormData({ title: editingCity?.title || "", description: editingCity?.description || "" });
+  }, [editingCity]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -44,7 +54,7 @@ export const ModalForm: React.FC<IModalProps> = ({ isOpen, onClose, onSubmit }) 
         <form onSubmit={handleSubmit}>
           <div className={"controls"}>
             <label htmlFor={cityNameId}>Name:</label>
-            <textarea id={cityNameId} name="name" value={formData.name} onChange={handleChange}
+            <textarea id={cityNameId} name="title" value={formData.title} onChange={handleChange}
                       className={"textarea"} />
           </div>
           <div className={"controls"}>

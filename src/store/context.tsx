@@ -16,6 +16,10 @@ interface ICountriesContext {
   currentCountry: ICountry | null | undefined;
   addCity: (city: ICity) => void;
   deleteCity: (cityToBeDeletedId: string | number) => void;
+  updateCity: (oldCity: ICity, newData: {
+    title: string,
+    description: string,
+  }) => void;
 }
 
 export const CountriesContext = createContext<ICountriesContext>({
@@ -36,7 +40,10 @@ export const CountriesContext = createContext<ICountriesContext>({
   },
   addCity: () => {
   },
-  deleteCity: () => {},
+  deleteCity: () => {
+  },
+  updateCity: () => {
+  },
 });
 
 export function CountriesContextProvider({ children }: { children: React.ReactNode; }) {
@@ -54,7 +61,7 @@ export function CountriesContextProvider({ children }: { children: React.ReactNo
 
   function addCity(newCity: ICity) {
     if (newCity.title.trim().length === 0 || newCity.description.trim().length === 0) {
-      console.log("The data must not be empty.");
+      console.error("The data must not be empty.");
       return;
     }
 
@@ -81,6 +88,34 @@ export function CountriesContextProvider({ children }: { children: React.ReactNo
     setCurrentCities(prevCities => {
       return prevCities.filter(city => city.id !== cityToBeDeletedId);
     });
+  }
+
+  function updateCity(oldCityData: ICity, newDataToUpdate: { title: string, description: string }) {
+    const foundCity = allCities.find(city => city.id === oldCityData.id);
+
+    if (!foundCity) {
+      throw new Error("City to update not found.");
+    }
+
+    setAllCities(prevCities => {
+      return prevCities.map(city => {
+        if (city.id === foundCity.id) {
+          return { ...foundCity, ...newDataToUpdate };
+        }
+        return city;
+      });
+    });
+
+    if (foundCity.country_id === selectedCountryId) {
+      setCurrentCities(prevCities => {
+        return prevCities.map(city => {
+          if (city.id === foundCity.id) {
+            return { ...foundCity, ...newDataToUpdate };
+          }
+          return city;
+        });
+      });
+    }
   }
 
   function onSelectedCountryIdChange(newCountryId: string | number) {
@@ -117,7 +152,8 @@ export function CountriesContextProvider({ children }: { children: React.ReactNo
     onSelectedCountryIdChange,
     currentCountry,
     addCity,
-    deleteCity
+    deleteCity,
+    updateCity,
   };
 
   return (
